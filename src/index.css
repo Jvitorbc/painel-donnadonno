@@ -660,12 +660,147 @@ label {
   opacity: 0.35;
   cursor: not-allowed;
 }
-.video-preview {
-  width: 100%;
-  max-width: 340px;
-  border-radius: 6px;
-  display: block;
+/* Card compacto no lugar do vídeo gigante — só o nome do arquivo e um link
+   pra abrir e conferir, sem carregar/tocar o vídeo dentro do formulário. */
+.arquivo-video {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
   margin-bottom: 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-superficie);
+  text-decoration: none;
+  color: var(--cor-texto);
+  max-width: 420px;
+  transition: border-color 0.15s;
+}
+.arquivo-video:hover {
+  border-color: var(--cor-acento);
+}
+.arquivo-video__icone {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--cor-acento);
+  color: #fff;
+}
+.arquivo-video__icone svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+}
+.arquivo-video__nome {
+  flex: 1;
+  font-size: 0.82rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.arquivo-video__acao {
+  flex: none;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--cor-acento);
+}
+
+
+/* Dashboard — recentes + pendências, lado a lado no desktop */
+.painel-dashboard-grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (max-width: 760px) {
+  .painel-dashboard-grade {
+    grid-template-columns: 1fr;
+  }
+}
+.painel-dashboard-grade .secao-midia {
+  margin-bottom: 0;
+}
+.painel-dashboard-grade h2 {
+  margin-bottom: 12px;
+}
+.lista-recentes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lista-recentes__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 6px;
+  border-radius: var(--raio-pequeno);
+  text-decoration: none;
+  color: var(--cor-texto);
+  transition: background-color 0.15s;
+}
+.lista-recentes__item:hover {
+  background: var(--cor-superficie);
+}
+.lista-recentes__miniatura {
+  flex: none;
+  width: 40px;
+  height: 50px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+}
+.lista-recentes__miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lista-recentes__sem-foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.lista-recentes__texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.lista-recentes__texto strong {
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lista-recentes__texto small {
+  color: var(--cor-texto-suave);
+  font-size: 0.76rem;
+}
+.lista-recentes__data {
+  flex: none;
+  font-size: 0.74rem;
+  color: var(--cor-texto-suave);
+}
+.tag-pendencia {
+  flex: none;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cor-erro);
+  background: #f2e3e1;
+  padding: 3px 8px;
+  border-radius: var(--raio-pequeno);
 }
 
 /* Barra de ação final do formulário — fica DEPOIS de fotos e vídeo, fixa

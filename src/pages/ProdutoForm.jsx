@@ -3,7 +3,19 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { useLoja } from "../context/LojaContext";
 
-const TAMANHOS_POSSIVEIS = ["PP", "P", "M", "G", "GG"];
+// Numeração de vestido usada pela loja (não é P/M/G).
+const TAMANHOS_POSSIVEIS = ["38", "40", "42", "44", "46", "48", "50", "52"];
+
+/** A partir da URL pública do vídeo, extrai um nome de arquivo mais legível
+ *  pra mostrar no formulário (tira o carimbo de data que fica na frente). */
+function nomeVideoParaExibir(url) {
+  try {
+    const ultimoPedaco = decodeURIComponent(url.split("/").pop() || "");
+    return ultimoPedaco.replace(/^\d+-/, "") || "vídeo enviado";
+  } catch {
+    return "vídeo enviado";
+  }
+}
 
 /** Cria um "caminho de arquivo" seguro (sem espaço/acento) para o Storage. */
 function nomeArquivoSeguro(nomeOriginal) {
@@ -378,7 +390,13 @@ export default function ProdutoForm() {
           <section className="secao-midia">
             <h2>Vídeo da modelo</h2>
             {campos.video_url ? (
-              <video src={campos.video_url} controls className="video-preview" />
+              <a href={campos.video_url} target="_blank" rel="noopener" className="arquivo-video">
+                <span className="arquivo-video__icone" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M9 7l9 5-9 5V7z" /></svg>
+                </span>
+                <span className="arquivo-video__nome">{nomeVideoParaExibir(campos.video_url)}</span>
+                <span className="arquivo-video__acao">Abrir ↗</span>
+              </a>
             ) : (
               <p className="pagina__intro">Nenhum vídeo enviado ainda.</p>
             )}
