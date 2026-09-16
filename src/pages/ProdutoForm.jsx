@@ -229,13 +229,17 @@ export default function ProdutoForm() {
   return (
     <div className="pagina pagina--estreita">
       <div className="pagina__cabecalho">
-        <h1>{editando ? "Editar peça" : "Adicionar peça"}</h1>
+        <div>
+          <span className="pagina__olho">Produto</span>
+          <h1>{editando ? "Editar peça" : "Adicionar peça"}</h1>
+        </div>
         <Link to="/produtos" className="botao botao--linha">
           Voltar
         </Link>
       </div>
 
-      <form className="formulario-produto" onSubmit={aoSalvar}>
+      <form onSubmit={aoSalvar}>
+      <div className="formulario-produto">
         <label htmlFor="nome">Nome da peça</label>
         <input
           id="nome"
@@ -335,22 +339,7 @@ export default function ProdutoForm() {
             Marcar como novidade
           </label>
         </div>
-
-        {erro && (
-          <p className="mensagem-erro" role="alert">
-            {erro}
-          </p>
-        )}
-
-        <button type="submit" className="botao botao--primario" disabled={salvando}>
-          {salvando ? "Salvando…" : editando ? "Salvar alterações" : "Salvar e continuar"}
-        </button>
-        {!editando && (
-          <p className="dica-formulario">
-            Depois de salvar, esta página recarrega no modo de edição — é aí que você adiciona as fotos e o vídeo.
-          </p>
-        )}
-      </form>
+      </div>
 
       {editando && (
         <>
@@ -399,11 +388,28 @@ export default function ProdutoForm() {
               <input type="file" accept="video/*" hidden onChange={aoEscolherVideo} disabled={enviandoVideo} />
             </label>
             <p className="dica-formulario">
-              O vídeo só fica salvo na peça depois de clicar em "Salvar alterações" acima.
+              O vídeo só fica salvo na peça depois de clicar em "Salvar alterações", logo abaixo.
             </p>
           </section>
         </>
       )}
+
+      <div className="barra-acoes-formulario">
+        <button type="submit" className="botao botao--primario" disabled={salvando}>
+          {salvando ? "Salvando…" : editando ? "Salvar alterações" : "Salvar e continuar"}
+        </button>
+        {erro && (
+          <p className="mensagem-erro" role="alert">
+            {erro}
+          </p>
+        )}
+        {!editando && (
+          <p className="dica-formulario">
+            Depois de salvar, esta página recarrega no modo de edição — é aí que você adiciona as fotos e o vídeo.
+          </p>
+        )}
+      </div>
+      </form>
     </div>
   );
 }

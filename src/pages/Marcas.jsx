@@ -59,48 +59,76 @@ export default function Marcas() {
 
   return (
     <div className="pagina pagina--estreita">
+      <span className="pagina__olho">Catálogo</span>
       <h1>Marcas</h1>
       {erro && <p className="mensagem-erro">{erro}</p>}
 
-      <ul className="lista-simples">
-        {marcas.map((marca) => (
-          <li key={marca.id}>
-            {edicao?.id === marca.id ? (
-              <>
-                <input value={edicao.nome} onChange={(e) => setEdicao({ ...edicao, nome: e.target.value })} />
-                <button type="button" className="botao botao--linha" onClick={salvarEdicao}>
-                  Salvar
-                </button>
-                <button type="button" className="botao botao--linha" onClick={() => setEdicao(null)}>
-                  Cancelar
-                </button>
-              </>
-            ) : (
-              <>
-                <span>{marca.nome}</span>
-                <button type="button" className="botao botao--linha" onClick={() => setEdicao({ id: marca.id, nome: marca.nome })}>
-                  Editar
-                </button>
-                <button type="button" className="botao botao--linha botao--perigo" onClick={() => excluir(marca)}>
-                  Excluir
-                </button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-
-      <form className="formulario-linha" onSubmit={adicionar}>
-        <input
-          placeholder="Nome da nova marca"
-          value={nomeNovo}
-          onChange={(e) => setNomeNovo(e.target.value)}
-          aria-label="Nome da nova marca"
-        />
-        <button type="submit" className="botao botao--primario">
-          + Adicionar marca
-        </button>
-      </form>
+      <div className="tabela-wrap">
+        {marcas.length === 0 ? (
+          <p className="estado-vazio-simples">Nenhuma marca cadastrada ainda.</p>
+        ) : (
+          <table className="tabela">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {marcas.map((marca) => (
+                <tr key={marca.id}>
+                  {edicao?.id === marca.id ? (
+                    <td colSpan={2}>
+                      <div className="tabela__linha-edicao">
+                        <input
+                          value={edicao.nome}
+                          onChange={(e) => setEdicao({ ...edicao, nome: e.target.value })}
+                          autoFocus
+                        />
+                        <button type="button" className="botao botao--linha" onClick={salvarEdicao}>
+                          Salvar
+                        </button>
+                        <button type="button" className="botao botao--linha" onClick={() => setEdicao(null)}>
+                          Cancelar
+                        </button>
+                      </div>
+                    </td>
+                  ) : (
+                    <>
+                      <td>{marca.nome}</td>
+                      <td>
+                        <div className="tabela__acoes">
+                          <button
+                            type="button"
+                            className="botao botao--linha"
+                            onClick={() => setEdicao({ id: marca.id, nome: marca.nome })}
+                          >
+                            Editar
+                          </button>
+                          <button type="button" className="botao botao--linha botao--perigo" onClick={() => excluir(marca)}>
+                            Excluir
+                          </button>
+                        </div>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <form className="tabela__rodape-form" onSubmit={adicionar}>
+          <input
+            placeholder="Nome da nova marca"
+            value={nomeNovo}
+            onChange={(e) => setNomeNovo(e.target.value)}
+            aria-label="Nome da nova marca"
+          />
+          <button type="submit" className="botao botao--primario">
+            + Adicionar
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

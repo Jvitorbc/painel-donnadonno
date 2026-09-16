@@ -32,28 +32,29 @@ export default function Dashboard() {
 
   return (
     <div className="pagina">
+      <span className="pagina__olho">Painel</span>
       <h1>Visão geral</h1>
       <p className="pagina__intro">Resumo rápido do catálogo da {loja?.nome}.</p>
 
       {carregando ? (
         <p>Carregando…</p>
       ) : (
-        <div className="grade-cartoes">
-          <div className="cartao-numero">
-            <span className="cartao-numero__valor">{numeros.total}</span>
-            <span className="cartao-numero__rotulo">Peças cadastradas</span>
+        <div className="faixa-estatisticas">
+          <div className="faixa-estatisticas__item">
+            <span className="faixa-estatisticas__valor">{numeros.total}</span>
+            <span className="faixa-estatisticas__rotulo">Peças cadastradas</span>
           </div>
-          <div className="cartao-numero">
-            <span className="cartao-numero__valor">{numeros.ativos}</span>
-            <span className="cartao-numero__rotulo">Ativas no catálogo</span>
+          <div className="faixa-estatisticas__item">
+            <span className="faixa-estatisticas__valor">{numeros.ativos}</span>
+            <span className="faixa-estatisticas__rotulo">Ativas no catálogo</span>
           </div>
-          <div className="cartao-numero">
-            <span className="cartao-numero__valor">{numeros.total - numeros.ativos}</span>
-            <span className="cartao-numero__rotulo">Indisponíveis</span>
+          <div className="faixa-estatisticas__item">
+            <span className="faixa-estatisticas__valor">{numeros.total - numeros.ativos}</span>
+            <span className="faixa-estatisticas__rotulo">Indisponíveis</span>
           </div>
-          <div className="cartao-numero">
-            <span className="cartao-numero__valor">{numeros.novidades}</span>
-            <span className="cartao-numero__rotulo">Marcadas como novidade</span>
+          <div className="faixa-estatisticas__item">
+            <span className="faixa-estatisticas__valor">{numeros.novidades}</span>
+            <span className="faixa-estatisticas__rotulo">Marcadas como novidade</span>
           </div>
         </div>
       )}

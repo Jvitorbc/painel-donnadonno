@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import RotaProtegida from "./components/RotaProtegida";
-import Topbar from "./components/Topbar";
+import BarraLateral from "./components/BarraLateral";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Produtos from "./pages/Produtos";
@@ -12,8 +12,10 @@ import Categorias from "./pages/Categorias";
 function Interno({ children }) {
   return (
     <RotaProtegida>
-      <Topbar />
-      <main className="conteudo-principal">{children}</main>
+      <div className="layout-painel">
+        <BarraLateral />
+        <main className="conteudo-principal">{children}</main>
+      </div>
     </RotaProtegida>
   );
 }

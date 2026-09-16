@@ -52,7 +52,10 @@ export default function Produtos() {
   return (
     <div className="pagina">
       <div className="pagina__cabecalho">
-        <h1>Produtos</h1>
+        <div>
+          <span className="pagina__olho">Catálogo</span>
+          <h1>Produtos</h1>
+        </div>
         <Link to="/produtos/novo" className="botao botao--primario">
           + Adicionar peça
         </Link>
@@ -71,41 +74,68 @@ export default function Produtos() {
       {carregando ? (
         <p>Carregando…</p>
       ) : filtrados.length === 0 ? (
-        <p className="estado-vazio-simples">Nenhum produto encontrado.</p>
+        <div className="tabela-wrap">
+          <p className="estado-vazio-simples">Nenhum produto encontrado.</p>
+        </div>
       ) : (
-        <div className="tabela-produtos">
-          {filtrados.map((produto) => {
-            const foto = [...(produto.produto_fotos || [])].sort((a, b) => a.ordem - b.ordem)[0];
-            return (
-              <div className="linha-produto" key={produto.id}>
-                <div className="linha-produto__foto">
-                  {foto ? <img src={foto.url} alt="" /> : <div className="linha-produto__sem-foto">Sem foto</div>}
-                </div>
-                <div className="linha-produto__info">
-                  <strong>{produto.nome}</strong>
-                  <span>{produto.marcas?.nome || "Sem marca"}</span>
-                  <span>R$ {Number(produto.preco).toFixed(2).replace(".", ",")}</span>
-                </div>
-                <div className="linha-produto__tags">
-                  {produto.novidade && <span className="etiqueta etiqueta--novidade">Novidade</span>}
-                  <span className={`etiqueta ${produto.ativo ? "etiqueta--ativo" : "etiqueta--inativo"}`}>
-                    {produto.ativo ? "Ativo" : "Indisponível"}
-                  </span>
-                </div>
-                <div className="linha-produto__acoes">
-                  <button type="button" className="botao botao--linha" onClick={() => alternarAtivo(produto)}>
-                    {produto.ativo ? "Desativar" : "Ativar"}
-                  </button>
-                  <Link to={`/produtos/${produto.id}/editar`} className="botao botao--linha">
-                    Editar
-                  </Link>
-                  <button type="button" className="botao botao--linha botao--perigo" onClick={() => excluir(produto)}>
-                    Excluir
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+        <div className="tabela-wrap">
+          <table className="tabela">
+            <thead>
+              <tr>
+                <th aria-hidden="true"></th>
+                <th>Peça</th>
+                <th className="th--numero">Preço</th>
+                <th>Situação</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtrados.map((produto) => {
+                const foto = [...(produto.produto_fotos || [])].sort((a, b) => a.ordem - b.ordem)[0];
+                return (
+                  <tr key={produto.id}>
+                    <td>
+                      {foto ? (
+                        <img className="tabela__miniatura" src={foto.url} alt="" />
+                      ) : (
+                        <div className="tabela__sem-foto">Sem foto</div>
+                      )}
+                    </td>
+                    <td className="tabela__produto">
+                      <strong>{produto.nome}</strong>
+                      <span>{produto.marcas?.nome || "Sem marca"}</span>
+                    </td>
+                    <td className="td--numero">R$ {Number(produto.preco).toFixed(2).replace(".", ",")}</td>
+                    <td>
+                      <div className="tabela__tags">
+                        {produto.novidade && <span className="etiqueta etiqueta--novidade">Novidade</span>}
+                        <span className={`etiqueta ${produto.ativo ? "etiqueta--ativo" : "etiqueta--inativo"}`}>
+                          {produto.ativo ? "Ativo" : "Indisponível"}
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="tabela__acoes">
+                        <button type="button" className="botao botao--linha" onClick={() => alternarAtivo(produto)}>
+                          {produto.ativo ? "Desativar" : "Ativar"}
+                        </button>
+                        <Link to={`/produtos/${produto.id}/editar`} className="botao botao--linha">
+                          Editar
+                        </Link>
+                        <button
+                          type="button"
+                          className="botao botao--linha botao--perigo"
+                          onClick={() => excluir(produto)}
+                        >
+                          Excluir
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
