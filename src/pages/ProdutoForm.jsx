@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
+import { enviarArquivo } from "../lib/uploadR2";
 import { useLoja } from "../context/LojaContext";
 
 // Numeração de vestido usada pela loja (não é P/M/G).
@@ -159,14 +160,13 @@ export default function ProdutoForm() {
     let proximaOrdem = fotos.length ? Math.max(...fotos.map((f) => f.ordem)) + 1 : 0;
     for (const arquivo of arquivos) {
       const caminho = `${loja.id}/${id}/${nomeArquivoSeguro(arquivo.name)}`;
-      const { error: erroUpload } = await supabase.storage.from("produtos").upload(caminho, arquivo);
-      if (erroUpload) {
+      let publicUrl;
+      try {
+        publicUrl = await enviarArquivo(caminho, arquivo);
+      } catch (erroUpload) {
         setErro(`Erro ao enviar "${arquivo.name}": ${erroUpload.message}`);
         continue;
       }
-      const {
-        data: { publicUrl }
-      } = supabase.storage.from("produtos").getPublicUrl(caminho);
 
       const { data: novaFoto, error: erroInsercao } = await supabase
         .from("produto_fotos")
@@ -222,15 +222,15 @@ export default function ProdutoForm() {
     setEnviandoVideo(true);
     setErro("");
     const caminho = `${loja.id}/${id}/${nomeArquivoSeguro(arquivo.name)}`;
-    const { error } = await supabase.storage.from("produtos").upload(caminho, arquivo);
-    setEnviandoVideo(false);
-    if (error) {
-      setErro("Erro ao enviar vídeo: " + error.message);
+    let publicUrl;
+    try {
+      publicUrl = await enviarArquivo(caminho, arquivo);
+    } catch (erro) {
+      setEnviandoVideo(false);
+      setErro("Erro ao enviar vídeo: " + erro.message);
       return;
     }
-    const {
-      data: { publicUrl }
-    } = supabase.storage.from("produtos").getPublicUrl(caminho);
+    setEnviandoVideo(false);
     setCampos((atual) => ({ ...atual, video_url: publicUrl }));
     evento.target.value = "";
   }

@@ -1,8 +1,16 @@
 {
   "name": "painel-donnadonno",
   "compatibility_date": "2026-09-15",
+  "main": "worker/index.js",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "single-page-application"
-  }
+  },
+  "r2_buckets": [
+    {
+      "binding": "PRODUTOS_BUCKET",
+      "bucket_name": "produtos-donnadonno"
+    }
+  ]
 }
