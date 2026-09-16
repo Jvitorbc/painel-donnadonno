@@ -76,7 +76,7 @@ export default function ProdutoForm() {
         preco: data.preco ?? "",
         descricao: data.descricao || "",
         tamanhos: data.tamanhos || [],
-        cores: (data.cores || []).join(", "),
+        cores: (data.cores || [])[0] || "",
         video_url: data.video_url || "",
         ativo: data.ativo,
         novidade: data.novidade
@@ -109,10 +109,9 @@ export default function ProdutoForm() {
       preco: campos.preco === "" ? null : Number(campos.preco),
       descricao: campos.descricao.trim(),
       tamanhos: campos.tamanhos,
-      cores: campos.cores
-        .split(",")
-        .map((c) => c.trim())
-        .filter(Boolean),
+      // Guardado como array no banco (compatível com o catálogo/filtro por cor),
+      // mas por enquanto o painel só pede UMA cor por peça.
+      cores: campos.cores.trim() ? [campos.cores.trim()] : [],
       video_url: campos.video_url.trim() || null,
       ativo: campos.ativo,
       novidade: campos.novidade
@@ -313,10 +312,10 @@ export default function ProdutoForm() {
           ))}
         </div>
 
-        <label htmlFor="cores">Cores disponíveis (separadas por vírgula)</label>
+        <label htmlFor="cores">Cor</label>
         <input
           id="cores"
-          placeholder="Preto, Terracota, Branco"
+          placeholder="Rosa"
           value={campos.cores}
           onChange={(e) => setCampos({ ...campos, cores: e.target.value })}
         />
