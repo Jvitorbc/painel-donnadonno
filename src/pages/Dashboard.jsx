@@ -34,7 +34,7 @@ export default function Dashboard() {
     <div className="pagina">
       <span className="pagina__olho">Painel</span>
       <h1>Visão geral</h1>
-      <p className="pagina__intro">Resumo rápido do catálogo da {loja?.nome}.</p>
+      <p className="pagina__intro">Dashboard</p>
 
       {carregando ? (
         <p>Carregando…</p>

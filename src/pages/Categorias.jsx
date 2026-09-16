@@ -65,9 +65,6 @@ export default function Categorias() {
     <div className="pagina pagina--estreita">
       <span className="pagina__olho">Catálogo</span>
       <h1>Categorias</h1>
-      <p className="pagina__intro">
-        Hoje o catálogo só usa "Vestidos" — mas se a loja passar a vender outros tipos de peça, é aqui que se cadastra.
-      </p>
       {erro && <p className="mensagem-erro">{erro}</p>}
 
       <div className="tabela-wrap">
