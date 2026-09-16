@@ -660,6 +660,12 @@ label {
   opacity: 0.35;
   cursor: not-allowed;
 }
+.acoes-video {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 /* Card compacto no lugar do vídeo gigante — só o nome do arquivo e um link
    pra abrir e conferir, sem carregar/tocar o vídeo dentro do formulário. */
 .arquivo-video {

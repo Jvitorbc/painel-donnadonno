@@ -235,6 +235,11 @@ export default function ProdutoForm() {
     evento.target.value = "";
   }
 
+  function removerVideo() {
+    if (!confirm("Remover o vídeo desta peça?")) return;
+    setCampos((atual) => ({ ...atual, video_url: "" }));
+  }
+
   if (carregando) return <p className="pagina">Carregando…</p>;
 
   return (
@@ -400,10 +405,17 @@ export default function ProdutoForm() {
             ) : (
               <p className="pagina__intro">Nenhum vídeo enviado ainda.</p>
             )}
-            <label className="botao botao--secundario botao--upload">
-              {enviandoVideo ? "Enviando…" : campos.video_url ? "Trocar vídeo" : "+ Adicionar vídeo"}
-              <input type="file" accept="video/*" hidden onChange={aoEscolherVideo} disabled={enviandoVideo} />
-            </label>
+            <div className="acoes-video">
+              <label className="botao botao--secundario botao--upload">
+                {enviandoVideo ? "Enviando…" : campos.video_url ? "Trocar vídeo" : "+ Adicionar vídeo"}
+                <input type="file" accept="video/*" hidden onChange={aoEscolherVideo} disabled={enviandoVideo} />
+              </label>
+              {campos.video_url && (
+                <button type="button" className="botao botao--linha" onClick={removerVideo}>
+                  Remover vídeo
+                </button>
+              )}
+            </div>
             <p className="dica-formulario">
               O vídeo só fica salvo na peça depois de clicar em "Salvar alterações", logo abaixo.
             </p>
